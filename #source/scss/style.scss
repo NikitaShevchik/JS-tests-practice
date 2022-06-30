@@ -1,5 +1,102 @@
 // Обнуление стилей
 @import "nullstyle.scss";
 // Подключение шрифтов
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 //SCSS
+body{
+    background-color: #e42e4e;
+}
+.header {
+    &__title {
+        font-size: 30px;
+        font-weight: 700;
+        padding: 0 0 10px 0;
+    }
+    &__text {
+    }
+}
+.content {
+    color: #fff;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 30px 20px 20px 20px;
+}
+.main {
+
+    &__questions {
+    }
+}
+.questions {
+
+    &__item {
+        padding: 0 0 20px 0;
+    }
+
+    &__content {
+    }
+
+    &__title {
+        font-weight: 700;
+        padding: 0 0 10px 0;
+    }
+
+    &__answer {
+        padding: 0 0 10px 0;
+    }
+
+    &__input {
+        border-radius: 5px;
+        padding: 5px;
+        font-size: 16px;
+    }
+
+    &__check {
+        color: #d9123a;
+        background-color: #fff;
+        border: 1px solid #d9123a;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: 700;
+        &:hover{
+            color: rgb(0, 110, 0);
+        }
+    }
+}
+
+.questions__input._wrong{
+    position: relative;
+}
+
+.questions__input._wronganim{
+    animation: wrong 0.4s linear;
+}
+
+.questions__input._right{
+    background-color: rgb(181, 255, 152);
+}
+
+@keyframes wrong {
+    0%{
+        background-color: rgb(255, 137, 137);
+        left: 0;
+    }
+    20%{
+        left: 5px;
+    }
+    40%{
+        left: -5px;
+    }
+    60%{
+        background-color: rgb(255, 137, 137);
+        left: 3px;
+    }
+    80%{
+        left: -3px;
+    }
+    100%{
+        background-color: rgb(255, 255, 255);
+        left: 0;
+    }
+}
