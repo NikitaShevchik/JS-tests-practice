@@ -93,6 +93,10 @@ body {
   padding: 30px 20px 20px 20px;
 }
 
+.main__questions {
+  max-width: 500px;
+}
+
 .questions__item {
   padding: 0 0 20px 0;
 }
@@ -107,6 +111,7 @@ body {
 }
 
 .questions__input {
+  width: 40%;
   border-radius: 5px;
   padding: 5px;
   font-size: 16px;
@@ -122,7 +127,17 @@ body {
 }
 
 .questions__check:hover {
-  color: #006e00;
+  color: #1B0112;
+}
+
+.main__check {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 6px 10px;
+  width: 200px;
+  font-size: 16px;
+  color: #d9123a;
+  font-weight: 700;
 }
 
 .questions__input._wrong {

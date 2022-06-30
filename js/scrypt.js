@@ -1,8 +1,10 @@
 "use strict"
 
 const questionsList = document.querySelector('.questions');
-const inputs = document.querySelectorAll('.questions__input');
-const checkButtons = document.querySelectorAll('.questions__check');
+const mainCheckButton = document.querySelector('.main__check');
+
+// const inputs = document.querySelectorAll('.questions__input');
+// const checkButtons = document.querySelectorAll('.questions__check');
 
 let answers = [
     '2013',
@@ -18,7 +20,6 @@ let questions = [
     'Как называется город, в котором происходят действия игры?',
     'Имя лучшего друга Франклина?'
 ]
-
 
 function setQuestions() {
     for (let i = 0; i < questions.length; i++) {
@@ -61,34 +62,52 @@ function setQuestions() {
             }
         })
     }
-}
-
-
-for (let i = 0; i < inputs.length; i++) {
-    inputs[i].addEventListener('keyup', function (e) {
-        if (e.key == 'Enter') {
-            var answer = answers[i];
-            var input = inputs[i];
-            if (input.value == answer) {
-                input.classList.add('_right');
-                input.setAttribute('disabled', 'disabled');
+    mainCheckButton.addEventListener('click', checkAllAnswers);
+    function checkAllAnswers() {
+        for (let i = 0; i < questions.length; i++) {
+            if (answers[i] == inputs[i].value) {
+                inputs[i].classList.add('_right');
+                inputs[i].setAttribute('disabled', 'disabled');
             } else {
-                wrongAnswer(input);
+                wrongAnswer(inputs[i]);
             }
         }
-    })
+    }
 }
-for (let b = 0; b < checkButtons.length; b++) {
-    checkButtons[b].addEventListener('click', function () {
-        var input = checkButtons[b].parentNode.querySelector('.questions__input')
-        if (input.value == answers[b]) {
-            input.classList.add('_right');
-            input.setAttribute('disabled', 'disabled');
-        } else {
-            wrongAnswer(input);
-        }
-    })
-}
+setQuestions()
+
+
+
+
+
+// for (let i = 0; i < inputs.length; i++) {
+//     inputs[i].addEventListener('keyup', function (e) {
+//         if (e.key == 'Enter') {
+//             var answer = answers[i];
+//             var input = inputs[i];
+//             if (input.value == answer) {
+//                 input.classList.add('_right');
+//                 input.setAttribute('disabled', 'disabled');
+//             } else {
+//                 wrongAnswer(input);
+//             }
+//         }
+//     })
+// }
+// for (let b = 0; b < checkButtons.length; b++) {
+//     checkButtons[b].addEventListener('click', function () {
+//         var input = checkButtons[b].parentNode.querySelector('.questions__input')
+//         if (input.value == answers[b]) {
+//             input.classList.add('_right');
+//             input.setAttribute('disabled', 'disabled');
+//         } else {
+//             wrongAnswer(input);
+//         }
+//     })
+// }
+
+
+
 
 // for (let i of inputs) {
 //     i.addEventListener('keyup', checkAnswer);

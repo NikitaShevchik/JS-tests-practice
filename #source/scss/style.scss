@@ -24,8 +24,8 @@ body{
     padding: 30px 20px 20px 20px;
 }
 .main {
-
     &__questions {
+        max-width: 500px;
     }
 }
 .questions {
@@ -47,6 +47,7 @@ body{
     }
 
     &__input {
+        width: 40%;
         border-radius: 5px;
         padding: 5px;
         font-size: 16px;
@@ -60,9 +61,18 @@ body{
         border-radius: 5px;
         font-weight: 700;
         &:hover{
-            color: rgb(0, 110, 0);
+            color: #1B0112;
         }
     }
+}
+.main__check{
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 6px 10px;
+    width: 200px;
+    font-size: 16px;
+    color: #d9123a;
+    font-weight: 700;
 }
 
 .questions__input._wrong{
