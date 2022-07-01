@@ -300,3 +300,23 @@ function wrongAnswer(input) {
 //         }
 //     }
 // }
+
+
+/*--------------RADIO QUIZ-----------------*/
+const radiosAll = document.querySelectorAll('.radios__radio');
+
+
+for (let r of radiosAll) {
+    r.addEventListener('change', function (e) {
+        var radioClicked = e.target;
+        if (radioClicked.hasAttribute('data-right')) {
+            var otherRadios = this.parentNode.parentNode.querySelectorAll('.radios__radio');
+            var radiosTitle = this.parentNode.parentNode.parentNode.querySelector('.radios__question');
+            radiosTitle.classList.add('_right')
+            for (let o of otherRadios) {
+                o.setAttribute('disabled', 'disabled')
+            }
+            // this.parendNode.setAttribute('disabled', 'disabled')
+        }
+    })
+}
