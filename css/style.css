@@ -239,3 +239,57 @@ body {
 .radios__question._right {
   color: #b5ff98;
 }
+
+label._wrong {
+  position: relative;
+  -webkit-animation: wrongLabel 0.4s linear;
+          animation: wrongLabel 0.4s linear;
+}
+
+@-webkit-keyframes wrongLabel {
+  0% {
+    color: #ff8989;
+    left: 0;
+  }
+  20% {
+    left: 5px;
+  }
+  40% {
+    left: -5px;
+  }
+  60% {
+    color: #ff8989;
+    left: 3px;
+  }
+  80% {
+    left: -3px;
+  }
+  100% {
+    color: white;
+    left: 0;
+  }
+}
+
+@keyframes wrongLabel {
+  0% {
+    color: #ff8989;
+    left: 0;
+  }
+  20% {
+    left: 5px;
+  }
+  40% {
+    left: -5px;
+  }
+  60% {
+    color: #ff8989;
+    left: 3px;
+  }
+  80% {
+    left: -3px;
+  }
+  100% {
+    color: white;
+    left: 0;
+  }
+}

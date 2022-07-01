@@ -304,19 +304,39 @@ function wrongAnswer(input) {
 
 /*--------------RADIO QUIZ-----------------*/
 const radiosAll = document.querySelectorAll('.radios__radio');
+const checkAllRadios = document.querySelector('.quiz__check');
 
-
-for (let r of radiosAll) {
-    r.addEventListener('change', function (e) {
-        var radioClicked = e.target;
-        if (radioClicked.hasAttribute('data-right')) {
-            var otherRadios = this.parentNode.parentNode.querySelectorAll('.radios__radio');
-            var radiosTitle = this.parentNode.parentNode.parentNode.querySelector('.radios__question');
-            radiosTitle.classList.add('_right')
-            for (let o of otherRadios) {
-                o.setAttribute('disabled', 'disabled')
+function checkRadioOnClick() {
+    for (let r of radiosAll) {
+        r.addEventListener('change', function (e) {
+            var radioClicked = e.target;
+            ifRightRadio(radioClicked)
+        })
+    }
+}
+function checkRadioOnButton() {
+    checkAllRadios.addEventListener('click', function () {
+        for (let r of radiosAll) {
+            if (r.checked) {
+                ifRightRadio(r)
             }
-            // this.parendNode.setAttribute('disabled', 'disabled')
         }
     })
+}
+checkRadioOnClick()
+checkRadioOnButton()
+
+function ifRightRadio(e) {
+    if (e.hasAttribute('data-right')) {
+        var otherRadios = e.parentNode.parentNode.querySelectorAll('.radios__radio');
+        var radiosTitle = e.parentNode.parentNode.parentNode.querySelector('.radios__question');
+        radiosTitle.classList.add('_right');
+        for (let o of otherRadios) {
+            o.setAttribute('disabled', 'disabled');
+        }
+    } else {
+        console.log('sett')
+        e.parentNode.classList.add('_wrong');
+        setTimeout(() => e.parentNode.classList.remove('_wrong'), 410);
+    }
 }

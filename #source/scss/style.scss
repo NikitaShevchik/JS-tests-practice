@@ -153,3 +153,31 @@ body{
 .radios__question._right{
     color: rgb(181, 255, 152);
 }
+
+label._wrong{
+    position: relative;
+    animation: wrongLabel 0.4s linear;
+}
+@keyframes wrongLabel {
+    0%{
+        color: rgb(255, 137, 137);
+        left: 0;
+    }
+    20%{
+        left: 5px;
+    }
+    40%{
+        left: -5px;
+    }
+    60%{
+        color: rgb(255, 137, 137);
+        left: 3px;
+    }
+    80%{
+        left: -3px;
+    }
+    100%{
+        color: rgb(255, 255, 255);
+        left: 0;
+    }
+}
