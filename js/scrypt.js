@@ -305,6 +305,7 @@ function wrongAnswer(input) {
 /*--------------RADIO QUIZ-----------------*/
 const radiosAll = document.querySelectorAll('.radios__radio');
 const checkAllRadios = document.querySelector('.quiz__check');
+let answersQuiz = [0, 2, 1]
 
 function checkRadioOnClick() {
     for (let r of radiosAll) {
@@ -323,9 +324,10 @@ function checkRadioOnButton() {
         }
     })
 }
-checkRadioOnClick()
-checkRadioOnButton()
+// checkRadioOnClick() //Я УБРАЛ ИЗ ПРАВИЛЬНЫХ ОТВЕТОВ В HTML data-right
+// checkRadioOnButton() //Я УБРАЛ ИЗ ПРАВИЛЬНЫХ ОТВЕТОВ В HTML data-right
 
+/*--------Проверка правильности выбора радио где е - радио кнопка---------*/
 function ifRightRadio(e) {
     if (e.hasAttribute('data-right')) {
         var otherRadios = e.parentNode.parentNode.querySelectorAll('.radios__radio');
@@ -335,8 +337,66 @@ function ifRightRadio(e) {
             o.setAttribute('disabled', 'disabled');
         }
     } else {
-        console.log('sett')
         e.parentNode.classList.add('_wrong');
         setTimeout(() => e.parentNode.classList.remove('_wrong'), 410);
     }
 }
+
+const radiosInQuestion = document.querySelectorAll('.radios__buttons');
+
+// for (let q of radiosInQuestion) {
+//     var allRadioButtons = q.querySelectorAll('.radios__radio');
+//     for (let i = 0; i < allRadioButtons.length; i++) {
+//         var radio = allRadioButtons[i];
+//         radio.addEventListener('click', function(){
+//             // if (radio.checked){
+//             //     if ()
+//             // }
+//         })
+//     }
+// }
+function checkRadiosFromArrayOnClick() {
+    for (let q = 0; q < radiosInQuestion.length; q++) {
+        var allRadioButtons = radiosInQuestion[q].querySelectorAll('.radios__radio');
+        for (let i = 0; i < allRadioButtons.length; i++) {
+            var radio = allRadioButtons[i];
+            radio.addEventListener('click', function () {
+                if (answersQuiz[q] == i) {
+                    var otherRadios = radiosInQuestion[q].querySelectorAll('.radios__radio');
+                    var radiosTitle = radiosInQuestion[q].parentNode.querySelector('.radios__question');
+                    radiosTitle.classList.add('_right');
+                    for (let o of otherRadios) {
+                        o.setAttribute('disabled', 'disabled');
+                    }
+                } else {
+                    this.parentNode.classList.add('_wrong');
+                    setTimeout(() => this.parentNode.classList.remove('_wrong'), 410);
+                }
+            })
+        }
+    }
+}
+function checkRadiosFromArrayOnButton() {
+    checkAllRadios.addEventListener('click', function () {
+        for (let q = 0; q < radiosInQuestion.length; q++) {
+            var allRadioButtons = radiosInQuestion[q].querySelectorAll('.radios__radio');
+            for (let i = 0; i < allRadioButtons.length; i++) {
+                var radio = allRadioButtons[i];
+                if (radio.checked) {
+                    if (answersQuiz[q] == i) {
+                        var otherRadios = radiosInQuestion[q].querySelectorAll('.radios__radio');
+                        var radiosTitle = radiosInQuestion[q].parentNode.querySelector('.radios__question');
+                        radiosTitle.classList.add('_right');
+                        for (let o of otherRadios) {
+                            o.setAttribute('disabled', 'disabled');
+                        }
+                    } else {
+                        radio.parentNode.classList.add('_wrong');
+                        setTimeout(() => radio.parentNode.classList.remove('_wrong'), 410);
+                    }
+                }
+            }
+        }
+    })
+}
+checkRadiosFromArrayOnClick()
