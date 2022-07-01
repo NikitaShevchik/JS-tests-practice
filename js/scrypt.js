@@ -303,9 +303,8 @@ function wrongAnswer(input) {
 
 
 /*--------------RADIO QUIZ-----------------*/
-const radiosAll = document.querySelectorAll('.radios__radio');
-const checkAllRadios = document.querySelector('.quiz__check');
-let answersQuiz = [0, 2, 1]
+// const radiosAll = document.querySelectorAll('.radios__radio'); // я убрал все из html 
+// const checkAllRadios = document.querySelector('.quiz__check');
 
 function checkRadioOnClick() {
     for (let r of radiosAll) {
@@ -342,16 +341,15 @@ function ifRightRadio(e) {
     }
 }
 
-const radiosInQuestion = document.querySelectorAll('.radios__buttons');
+/*------Теперь ответы (нужные по порядку радио) будут создержаться в массиве по порядку как идут вопросы-------*/
+let answersQuiz = [0, 2, 1]
+// const radiosInQuestion = document.querySelectorAll('.radios__buttons'); // Я убрал все из html
 
 // for (let q of radiosInQuestion) {
 //     var allRadioButtons = q.querySelectorAll('.radios__radio');
 //     for (let i = 0; i < allRadioButtons.length; i++) {
 //         var radio = allRadioButtons[i];
 //         radio.addEventListener('click', function(){
-//             // if (radio.checked){
-//             //     if ()
-//             // }
 //         })
 //     }
 // }
@@ -399,4 +397,107 @@ function checkRadiosFromArrayOnButton() {
         }
     })
 }
-checkRadiosFromArrayOnClick()
+// checkRadiosFromArrayOnClick() //переделываю ниже логику создания вопросов + логику ответов
+
+/*------Вопросы, варианты ответов, ответы - все содержится в одном массиве с объектами-------*/
+let quizObject = [
+    {
+        question: 'GTA V лучшая игра в мире?',
+        answer: 0,
+        variants: [
+            'Да',
+            'Нет',
+            'После GTA VI'
+        ]
+    },
+    {
+        question: 'Что вороует Франклин в своей первой миссии?',
+        answer: 2,
+        variants: [
+            'Ценные бумаги',
+            'Деньги',
+            'Машину'
+        ]
+    },
+    {
+        question: 'Где живет Тревор?',
+        answer: 1,
+        variants: [
+            'Чиллиад',
+            'Сэнди Шорс',
+            'Вайнвуд'
+        ]
+    }
+]
+/*------Генерация вопросов, по массиву-------*/
+const quizRadiosArea = document.querySelector('.radios');
+function generationQuiz(i) {
+    quizRadiosArea.innerHTML += `<div class="radios__item">
+    <div class="radios__question">${quizObject[i].question}</div>
+    <div class="radios__buttons">`
+    var radiosButtonsVariants = quizRadiosArea.querySelectorAll('.radios__buttons');
+    for (let q = 0; q < quizObject[i].variants.length; q++) {
+        radiosButtonsVariants[i].innerHTML += `<label class = "label">
+        <input type="radio" name="${i}" class="radios__radio">
+        ${quizObject[i].variants[q]}
+        </label>`
+    }
+    quizRadiosArea.innerHTML += `</div>
+</div>`
+}
+/*------Вся логика квиза с радио кнопками в одной функции-------*/
+function quizRadioLogic() {
+    for (let i = 0; i < quizObject.length; i++) {
+        generationQuiz(i);
+    }
+    const radiosAll = document.querySelectorAll('.radios__radio'); // все радио кнопки
+    const checkAllRadios = document.querySelector('.quiz__check'); // кнопка проверить все отвты
+    const radiosInQuestion = document.querySelectorAll('.radios__buttons'); // коллекция из 3х радио кнопок одного вопроса
+
+    for (let q = 0; q < radiosInQuestion.length; q++) {
+        var allRadioButtons = radiosInQuestion[q].querySelectorAll('.radios__radio');
+        for (let i = 0; i < allRadioButtons.length; i++) {
+            var radio = allRadioButtons[i];
+            radio.addEventListener('click', function () {
+                if (quizObject[q].answer == i) {
+                    var otherRadios = radiosInQuestion[q].querySelectorAll('.radios__radio');
+                    var radiosTitle = radiosInQuestion[q].parentNode.querySelector('.radios__question');
+                    radiosTitle.classList.add('_right');
+                    for (let o of otherRadios) {
+                        o.setAttribute('disabled', 'disabled');
+                    }
+                } else {
+                    this.parentNode.classList.add('_wrong');
+                    setTimeout(() => this.parentNode.classList.remove('_wrong'), 410);
+                }
+            })
+        }
+    }
+    checkAllRadios.addEventListener('click', function () {
+        for (let q = 0; q < radiosInQuestion.length; q++) {
+            var allRadioButtons = radiosInQuestion[q].querySelectorAll('.radios__radio');
+            for (let i = 0; i < allRadioButtons.length; i++) {
+                var radio = allRadioButtons[i];
+                if (radio.checked) {
+                    if (quizObject[q].answer == i) {
+                        var otherRadios = radiosInQuestion[q].querySelectorAll('.radios__radio');
+                        var radiosTitle = radiosInQuestion[q].parentNode.querySelector('.radios__question');
+                        radiosTitle.classList.add('_right');
+                        for (let o of otherRadios) {
+                            o.setAttribute('disabled', 'disabled');
+                        }
+                    } else {
+                        radio.parentNode.classList.add('_wrong');
+                        // setTimeout(() => label.classList.remove('_wrong'), 410);
+                        const labels = document.querySelectorAll('.label')
+                        for (let l of labels) {
+                            setTimeout(() => l.classList.remove('_wrong'), 410);
+                        }
+                    }
+                }
+            }
+        }
+    })
+}
+/*------Запуск квиза с радио кнопками-----*/
+quizRadioLogic()
